@@ -1,0 +1,359 @@
+{
+  "1": {
+    "inputs": {
+      "seed": 456369110602398,
+      "steps": 35,
+      "cfg": 7,
+      "sampler_name": "ddpm",
+      "scheduler": "karras",
+      "denoise": 1,
+      "model": [
+        "37",
+        0
+      ],
+      "positive": [
+        "63",
+        0
+      ],
+      "negative": [
+        "5",
+        0
+      ],
+      "latent_image": [
+        "3",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "2": {
+    "inputs": {
+      "ckpt_name": "realisticVisionV60B1_v51VAE.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "3": {
+    "inputs": {
+      "width": 512,
+      "height": 768,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "4": {
+    "inputs": {
+      "text": "(ID photo of 1 girl in suit: 1.2), (photorealistic: 1.5), upper body, perfect face, detail expression，front face\n\nmasterpiece,best quality,high quality,highres,natural light,realistic,photorealistic,ultra highres, 4k",
+      "clip": [
+        "76",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "5": {
+    "inputs": {
+      "text": "expose breast, naked, text, watermark,bad quality, worst quality, low quality,monochrome,zombie,nsfw,hat,cap,3d models, embedding:ng_deepnegative_v1_75t, embedding:CyberRealistic_Negative-neg, ",
+      "clip": [
+        "76",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "6": {
+    "inputs": {
+      "samples": [
+        "1",
+        0
+      ],
+      "vae": [
+        "7",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "7": {
+    "inputs": {
+      "vae_name": "vae-ft-mse-840000-ema-pruned.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "9": {
+    "inputs": {
+      "ipadapter_file": "ip-adapter-faceid-portrait-v11_sd15.bin"
+    },
+    "class_type": "IPAdapterModelLoader",
+    "_meta": {
+      "title": "Load IPAdapter Model"
+    }
+  },
+  "10": {
+    "inputs": {
+      "image": "240110091643 - 副本 (2).jpg",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "14": {
+    "inputs": {
+      "lora_name": "ip-adapter-faceid-plusv2_sd15_lora.safetensors",
+      "strength_model": 0.65,
+      "model": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "LoraLoaderModelOnly"
+    }
+  },
+  "31": {
+    "inputs": {
+      "clip_name": "CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors"
+    },
+    "class_type": "CLIPVisionLoader",
+    "_meta": {
+      "title": "Load CLIP Vision"
+    }
+  },
+  "32": {
+    "inputs": {
+      "provider": "CPU"
+    },
+    "class_type": "InsightFaceLoader",
+    "_meta": {
+      "title": "Load InsightFace"
+    }
+  },
+  "33": {
+    "inputs": {
+      "weight": 0.8,
+      "noise": 0,
+      "weight_type": "original",
+      "start_at": 0,
+      "end_at": 1,
+      "faceid_v2": true,
+      "weight_v2": 2,
+      "unfold_batch": false,
+      "ipadapter": [
+        "9",
+        0
+      ],
+      "clip_vision": [
+        "31",
+        0
+      ],
+      "insightface": [
+        "32",
+        0
+      ],
+      "image": [
+        "45",
+        0
+      ],
+      "model": [
+        "76",
+        0
+      ]
+    },
+    "class_type": "IPAdapterApplyFaceID",
+    "_meta": {
+      "title": "Apply IPAdapter FaceID"
+    }
+  },
+  "37": {
+    "inputs": {
+      "weight": 0.4,
+      "noise": 0,
+      "weight_type": "original",
+      "start_at": 0,
+      "end_at": 1,
+      "unfold_batch": false,
+      "ipadapter": [
+        "38",
+        0
+      ],
+      "clip_vision": [
+        "31",
+        0
+      ],
+      "image": [
+        "45",
+        0
+      ],
+      "model": [
+        "33",
+        0
+      ]
+    },
+    "class_type": "IPAdapterApply",
+    "_meta": {
+      "title": "Apply IPAdapter"
+    }
+  },
+  "38": {
+    "inputs": {
+      "ipadapter_file": "ip-adapter-plus-face_sd15.safetensors"
+    },
+    "class_type": "IPAdapterModelLoader",
+    "_meta": {
+      "title": "Load IPAdapter Model"
+    }
+  },
+  "45": {
+    "inputs": {
+      "interpolation": "LANCZOS",
+      "crop_position": "top",
+      "sharpening": 0.15,
+      "image": [
+        "59",
+        0
+      ]
+    },
+    "class_type": "PrepImageForClipVision",
+    "_meta": {
+      "title": "Prepare Image For Clip Vision"
+    }
+  },
+  "59": {
+    "inputs": {
+      "crop_padding_factor": 0.25,
+      "cascade_xml": "lbpcascade_animeface.xml",
+      "image": [
+        "10",
+        0
+      ]
+    },
+    "class_type": "Image Crop Face",
+    "_meta": {
+      "title": "Image Crop Face"
+    }
+  },
+  "63": {
+    "inputs": {
+      "strength": 1,
+      "conditioning": [
+        "94",
+        0
+      ],
+      "control_net": [
+        "64",
+        0
+      ],
+      "image": [
+        "95",
+        0
+      ]
+    },
+    "class_type": "ControlNetApply",
+    "_meta": {
+      "title": "Apply ControlNet"
+    }
+  },
+  "64": {
+    "inputs": {
+      "control_net_name": "control_v11p_sd15_openpose.pth"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "76": {
+    "inputs": {
+      "lora_name": "add_detail.safetensors",
+      "strength_model": 0.4,
+      "strength_clip": 1,
+      "model": [
+        "2",
+        0
+      ],
+      "clip": [
+        "2",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "93": {
+    "inputs": {
+      "text": "(white background: 1.2)",
+      "clip": [
+        "76",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "94": {
+    "inputs": {
+      "conditioning_to": [
+        "4",
+        0
+      ],
+      "conditioning_from": [
+        "93",
+        0
+      ]
+    },
+    "class_type": "ConditioningConcat",
+    "_meta": {
+      "title": "Conditioning (Concat)"
+    }
+  },
+  "95": {
+    "inputs": {
+      "image": "male_xingxiangzhao_00006_.png",
+      "upload": "image"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "96": {
+    "inputs": {
+      "filename_prefix": "IDPhoto",
+      "images": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  }
+}
